@@ -1,0 +1,30 @@
+{{> nav }}
+
+<h1>Reddit Scraper!</h1>
+
+<h2>Saved Articles</h2>
+
+<div id="saved-article-container">
+    {{#each saved_articles}}
+    <div class="article">
+        
+        <div class="row">
+            <img class="photo img-fluid" src={{this.thumbnail}}>
+            <div class="title">
+                <a href={{this.link}}>{{this.headline}}</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="comments">
+                <a href={{this.thread}}>Comments</a>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-danger" class="remove-btn">X</button>
+            </div>
+        </div>
+
+    </div>
+    {{/each}}
+</div>

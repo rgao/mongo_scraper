@@ -1,0 +1,36 @@
+{{> nav }}
+
+<div class="text-center mt-3">
+
+    <label>Choose a Subreddit! (default: Politics)</label>
+    <input id="subreddit" type="text" placeholder="Politics">
+    
+    <a href="/scrape">
+        <button class="btn btn-warning" id="scrape-btn">Scrape!</button>
+    </a>
+</div>
+
+<div id="article-container">
+    {{#each article}}
+    <div class="article">
+
+        <div class="row">
+            <img class="photo img-fluid" src={{this.thumbnail}}>
+            <div class="title">
+                <a href={{this.link}}>{{this.headline}}</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="comments">
+                <a href={{this.thread}}>Comments</a>
+            </div>
+            <div class="button-container">
+                <button class="btn btn-success" class="save-btn" data-headline={{this.headline}} data-link={{this.link}}
+                    data-thumbnail={{this.thumbnail}} data-thread={{this.thread}}>Save</button>
+            </div>
+        </div>
+
+    </div>
+    {{/each}}
+</div>

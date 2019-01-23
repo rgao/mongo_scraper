@@ -1,0 +1,31 @@
+#logo {
+    border-radius: 100%
+}
+
+.title, .nav-item, label {
+    font-family: "Courier";
+    font-weight: bold
+}
+
+#navbar {
+    background-color: #cccccc
+}
+
+.nav-item {
+    color: black;
+}
+
+body {
+    background-image: url("images/supremecourt.jpg");
+    background-size: cover;
+}
+
+#scrape-btn {
+    border: 2px solid black;
+    border-radius: 100%;
+    font-family: "Courier";
+    font-weight: bold;
+    width: 100px;
+    height: 100px
+}
+
