@@ -24,7 +24,9 @@ var db = require("./models");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-mongoose.connect("mongodb://localhost/scraper", { useNewUrlParser: true });
+var scraper = process.env.scraper || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(scraper);
+
 
 app.get("/", function (request, response) {
     response.render("index");
