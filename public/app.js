@@ -5,7 +5,8 @@ $(document).on("click", "#scrape-btn", (event) => {
         var subreddit = "politics"
         scrape(subreddit);
     } else {
-        scrape($("#subreddit").val().trim() === "");
+        var subreddit = scrape($("#subreddit").val().trim() === "");
+        scrape(subreddit);
     };
 });
 
@@ -13,7 +14,7 @@ function scrape(input) {
     $.ajax({
         type: "GET",
         url: "/scrape",
-        data: input
+        data: { subreddit: input }
     }).then((data) => {
         console.log(data);
     });
