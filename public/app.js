@@ -5,7 +5,7 @@ $(document).on("click", "#scrape-btn", (event) => {
         var subreddit = "politics"
         scrape(subreddit);
     } else {
-        var subreddit = scrape($("#subreddit").val().trim() === "");
+        var subreddit = scrape($("#subreddit").val().trim());
         scrape(subreddit);
     };
 });

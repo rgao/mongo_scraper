@@ -34,7 +34,6 @@ app.get("/", function (request, response) {
 
 app.get("/scrape", function (request, response) {
     var sub = request.query.subreddit; 
-    // console.log(sub)
 
     axios.get("http://old.reddit.com/r/" + sub).then(function (data) {
 
@@ -58,7 +57,7 @@ app.get("/scrape", function (request, response) {
             });
         });
 
-        // console.log(result);
+        console.log(result);
         response.render("index", { article: result });
     });
 });
