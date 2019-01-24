@@ -14,7 +14,7 @@ function scrape(input) {
     $.ajax({
         type: "GET",
         url: "/scrape",
-        data: { subreddit: input }
+        data: {subreddit: input} 
     }).then((data) => {
         console.log(data);
     });
