@@ -34,6 +34,7 @@ app.get("/", function (request, response) {
 
 app.get("/scrape", function (request, response) {
     var sub = request.body; 
+    console.log(sub)
 
     axios.get("http://old.reddit.com/r/" + sub).then(function (data) {
 
