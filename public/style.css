@@ -18,6 +18,7 @@
 body {
     background-image: url("images/supremecourt.jpg");
     background-size: cover;
+    background-attachment: fixed;
 }
 
 #scrape-btn {
@@ -27,5 +28,23 @@ body {
     font-weight: bold;
     width: 100px;
     height: 100px
+}
+
+.article-container {
+    border: 3px double black;
+    background-color: #cccccc;
+    opacity: .9
+}
+
+.article {
+    border: 3px double orange;
+}
+
+.img-container {
+    float: left
+}
+
+.save-btn {
+    float: right;
 }
 

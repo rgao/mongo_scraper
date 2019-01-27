@@ -4,29 +4,25 @@
 
     <label>Choose a Subreddit! (default: Politics)</label>
     <input id="subreddit" type="text" placeholder="Politics">
-    
-    <a href="/scrape">
-        <button class="btn btn-warning" id="scrape-btn">Scrape!</button>
-    </a>
+
+    <button class="btn btn-warning" id="scrape-btn">Scrape!</button>
 </div>
 
-<div id="article-container">
+<div class="article-container m-5">
     {{#each article}}
-    <div class="article">
+    <div class="article m-3 px-3">
 
         <div class="row">
-            <img class="photo img-fluid" src={{this.thumbnail}}>
-            <div class="title">
-                <a href={{this.link}}>{{this.headline}}</a>
+            <div class="img-container">
+                <img class="photo img-fluid" src={{this.thumbnail}}>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="comments">
-                <a href={{this.thread}}>Comments</a>
-            </div>
-            <div class="button-container">
-                <button class="btn btn-success" class="save-btn" data-headline={{this.headline}} data-link={{this.link}}
+            <div class="content">
+                <a class="title" href={{this.link}}>{{this.headline}}</a>
+                <div class="comments">
+                    <a href={{this.thread}}>Comments</a>
+                </div>
+                <button class="btn btn-success save-btn" data-id={{this._id}} data-headline={{this.headline}} data-link={{this.link}}
                     data-thumbnail={{this.thumbnail}} data-thread={{this.thread}}>Save</button>
             </div>
         </div>

@@ -16,74 +16,87 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Routes
-// var routes = require("./routes.js");
-// app.use(routes);
-
 var db = require("./models");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-var scraper = process.env.scraper || "mongodb://localhost/mongoHeadlines";
+var scraper = process.env.scraper || "mongodb://localhost/scraper";
 mongoose.connect(scraper);
 
-
+// renders all stored articles on home page
 app.get("/", function (request, response) {
-    response.render("index");
-});
+    db.Article.find({}).then((data) => {
 
-app.get("/scrape", function (request, response) {
-    var sub = request.query.subreddit; 
-
-    axios.get("http://old.reddit.com/r/" + sub).then(function (data) {
-
-        var $ = cheerio.load(data.data);
-
-        var result = [];
-
-        $(".thing").each(function (i, element) {
-            var top_matter = $(element).children("div.entry").children("div.top-matter");
-
-            var headline = top_matter.children("p.title").text();
-            var link = top_matter.children("p.title").children().attr("href");
-            var thumbnail = $(element).children("a.thumbnail").children().attr("src");
-            var thread = top_matter.children("ul.buttons").children("li.first").children().attr("href");
-
-            result.push({
-                headline: headline,
-                link: link,
-                thumbnail: thumbnail,
-                thread: thread
-            });
-        });
-
-        console.log(result);
-        response.render("index", { article: result });
+        response.render("index", { article: data });
     });
 });
 
-app.post("/save", function (request, response) {
-    db.Article.create(request.body)
+// deletes all unsaved articles, scrape new articles, and render them
+app.get("/scrape", function (request, response) {
+    var sub = request.query.subreddit;
+    db.Article.deleteMany({ "saved": false }).then(function (data) {
+
+        axios.get("http://old.reddit.com/r/" + sub).then(function (data) {
+
+            var $ = cheerio.load(data.data);
+            var responseArray = [];
+            $(".thing").each(function (i, element) {
+                var result = {};
+                var top_matter = $(element).children("div.entry").children("div.top-matter");
+
+                result.headline = top_matter.children("p.title").text();
+                result.link = top_matter.children("p.title").children().attr("href");
+                result.thumbnail = $(element).children("a.thumbnail").children().attr("src");
+                result.thread = top_matter.children("ul.buttons").children("li.first").children().attr("href");
+
+                db.Article.create(result)
+                    .then((dbArticle) => {
+                        console.log(dbArticle);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                responseArray.push(result)
+            });
+            console.log(responseArray)
+            response.render("index", { article: responseArray });
+        });
+    })
+});
+
+// app.get("/articles/render", function (request, response) {
+//     db.Article.find({})
+//         .then(function (dbArticle) {
+//             response.render("articles", { article: dbArticle });
+//         })
+//         .catch(function (error) {
+//             response.json(error);
+//         });
+// });
+
+app.put("/save", function (request, response) {
+    console.log(request.query)
+    db.Article.update({ id: request.body._id },
+        { saved: true })
         .then(function (dbArticle) {
-            // console.log(dbArticle);
+            console.log(dbArticle);
         });
 });
 
-app.get("/saved", function (request, response) {
-    db.Article.find({})
-        .then(function (dbArticles) {
-            console.log(dbArticles)
-            response.render("saved", { saved_articles: dbArticles });
-        }).catch(function (error) {
-            response.json(error);
-        });
-});
+// app.get("/saved", function (request, response) {
+//     db.Article.find({})
+//         .then(function (dbArticles) {
+//             console.log(dbArticles)
+//             response.render("saved", { saved_articles: dbArticles });
+//         }).catch(function (error) {
+//             response.json(error);
+//         });
+// });
 
-app.delete("/saved", function (request, response) {
-    db.Article.remove({headline: request.body.headline});
+// app.delete("/saved", function (request, response) {
+//     db.Article.remove({ headline: request.body.headline });
 
-    console.log(response);
-});
+//     console.log(response);
+// });
 
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");

@@ -14,29 +14,28 @@ function scrape(input) {
     $.ajax({
         type: "GET",
         url: "/scrape",
-        data: {subreddit: input} 
+        data: { subreddit: input }
     }).then((data) => {
-        console.log(data);
+        location.reload();
     });
 };
 
-// $(document).on("click", ".save-btn", () => {
+$(document).on("click", ".save-btn", (event) => {
+    event.preventDefault();
+    console.log("hi")
 
-//     $.ajax({
-//         type: "POST",
-//         url: "/save",
-//         data: {
-//             headline: $(this).attr(".data-headline"),
-//             link: $(this).attr(".data-link"),
-//             thumbnail: $(this).attr(".data-thumbnail"),
-//             thread: $(this).attr(".data-thread")
-//         }
-//     })
-//         .then(function (data) {
-//             console.log(data);
-//             $(this).text("Saved!");
-//         });
-// });
+    $.ajax({
+        type: "PUT",
+        url: "/save",
+        data: {
+            _id: $(this).attr(".data-id")
+        }
+    })
+        .then(function (data) {
+            console.log(data);
+            $(this).text("Saved!");
+        });
+});
 
 // $(document).on("click", ".remove-btn", () => {
 

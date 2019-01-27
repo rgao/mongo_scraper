@@ -20,6 +20,12 @@ var ArticleSchema = new Schema ({
     thread: {
         type: String,
         required: false
+    },
+
+    saved: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 });
 
