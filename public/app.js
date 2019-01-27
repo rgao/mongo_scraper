@@ -20,22 +20,22 @@ function scrape(input) {
     });
 };
 
-$(document).on("click", ".save-btn", (event) => {
-    event.preventDefault();
-    console.log("hi")
+// $(document).on("click", ".save-btn", (event) => {
+//     event.preventDefault();
+//     console.log("hi")
 
-    $.ajax({
-        type: "PUT",
-        url: "/save",
-        data: {
-            _id: $(this).attr(".data-id")
-        }
-    })
-        .then(function (data) {
-            console.log(data);
-            $(this).text("Saved!");
-        });
-});
+//     $.ajax({
+//         type: "PUT",
+//         url: "/save",
+//         data: {
+//             _id: $(this).attr(".data-id")
+//         }
+//     })
+//         .then(function (data) {
+//             console.log(data);
+//             $(this).text("Saved!");
+//         });
+// });
 
 // $(document).on("click", ".remove-btn", () => {
 

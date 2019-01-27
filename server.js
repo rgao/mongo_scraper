@@ -73,14 +73,14 @@ app.get("/scrape", function (request, response) {
 //         });
 // });
 
-app.put("/save", function (request, response) {
-    console.log(request.query)
-    db.Article.update({ id: request.body._id },
-        { saved: true })
-        .then(function (dbArticle) {
-            console.log(dbArticle);
-        });
-});
+// app.put("/save", function (request, response) {
+//     console.log(request.query)
+//     db.Article.update({ id: request.body._id },
+//         { saved: true })
+//         .then(function (dbArticle) {
+//             console.log(dbArticle);
+//         });
+// });
 
 // app.get("/saved", function (request, response) {
 //     db.Article.find({})
