@@ -20,8 +20,8 @@ var db = require("./models");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-var scraper = process.env.scraper || "mongodb://localhost/scraper";
-mongoose.connect(scraper);
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
+mongoose.connect(MONGODB_URI);
 
 // renders all stored articles on home page
 app.get("/", function (request, response) {
